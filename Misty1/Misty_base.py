@@ -200,26 +200,26 @@ class Misty(object):
                 self._FL( self._vars['MISTY_KX'][r][0:32], self._vars['MISTY_FL'][r//2][0:32], r, 0 )
                 self._FL( self._vars['MISTY_KX'][r][32:64], self._vars['MISTY_FL'][r//2][32:64], r, 1 )
 
-                m = Matrix( self._matrixName_copy, self._matrix_copy, self._vars['MISTY_FL'][r//2][0:32], self._vars['MISTY_FO_IN'][r] + self._vars['MISTY_KX'][r+1][32:64], r, 0)
-                self._constrs += m.get_declares_asserts()
+                #m = Matrix( self._matrixName_copy, self._matrix_copy, self._vars['MISTY_FL'][r//2][0:32], self._vars['MISTY_FO_IN'][r] + self._vars['MISTY_KX'][r+1][32:64], r, 0)
+                #self._constrs += m.get_declares_asserts()
 
-                #self._block_copy( self._vars['MISTY_FL'][r//2][0:32], self._vars['MISTY_FO_IN'][r], self._vars['MISTY_KX'][r+1][32:64] )
+                self._block_copy( self._vars['MISTY_FL'][r//2][0:32], self._vars['MISTY_FO_IN'][r], self._vars['MISTY_KX'][r+1][32:64] )
                 self._FO( self._vars['MISTY_FO_IN'][r], self._vars['MISTY_FO_OUT'][r], r )
 
-                m = Matrix( self._matrixName_xor, self._matrix_xor, self._vars['MISTY_FO_OUT'][r] + self._vars['MISTY_FL'][r//2][32:64], self._vars['MISTY_KX'][r + 1][0:32], r, 0)
-                self._constrs += m.get_declares_asserts()
-                #self._block_xor( self._vars['MISTY_FO_OUT'][r], self._vars['MISTY_FL'][r//2][32:64], self._vars['MISTY_KX'][r + 1][0:32])
+                #m = Matrix( self._matrixName_xor, self._matrix_xor, self._vars['MISTY_FO_OUT'][r] + self._vars['MISTY_FL'][r//2][32:64], self._vars['MISTY_KX'][r + 1][0:32], r, 0)
+                #self._constrs += m.get_declares_asserts()
+                self._block_xor( self._vars['MISTY_FO_OUT'][r], self._vars['MISTY_FL'][r//2][32:64], self._vars['MISTY_KX'][r + 1][0:32])
             else:
-                m = Matrix( self._matrixName_copy, self._matrix_copy, self._vars['MISTY_KX'][r][0:32], self._vars['MISTY_FO_IN'][r] + self._vars['MISTY_KX'][r+1][32:64] , r, 1)
-                self._constrs += m.get_declares_asserts()
+                #m = Matrix( self._matrixName_copy, self._matrix_copy, self._vars['MISTY_KX'][r][0:32], self._vars['MISTY_FO_IN'][r] + self._vars['MISTY_KX'][r+1][32:64] , r, 1)
+                #self._constrs += m.get_declares_asserts()
 
-                #self._block_copy( self._vars['MISTY_KX'][r][0:32], self._vars['MISTY_FO_IN'][r], self._vars['MISTY_KX'][r+1][32:64] )
+                self._block_copy( self._vars['MISTY_KX'][r][0:32], self._vars['MISTY_FO_IN'][r], self._vars['MISTY_KX'][r+1][32:64] )
                 self._FO( self._vars['MISTY_FO_IN'][r], self._vars['MISTY_FO_OUT'][r], r )
 
-                m = Matrix( self._matrixName_xor, self._matrix_xor,self._vars['MISTY_FO_OUT'][r] + self._vars['MISTY_KX'][r][32:64], self._vars['MISTY_KX'][r + 1][0:32], r, 1)
-                self._constrs += m.get_declares_asserts()
+                #m = Matrix( self._matrixName_xor, self._matrix_xor,self._vars['MISTY_FO_OUT'][r] + self._vars['MISTY_KX'][r][32:64], self._vars['MISTY_KX'][r + 1][0:32], r, 1)
+                #self._constrs += m.get_declares_asserts()
 
-                #self._block_xor( self._vars['MISTY_FO_OUT'][r], self._vars['MISTY_KX'][r][32:64], self._vars['MISTY_KX'][r + 1][0:32])
+                self._block_xor( self._vars['MISTY_FO_OUT'][r], self._vars['MISTY_KX'][r][32:64], self._vars['MISTY_KX'][r + 1][0:32])
 
     def _gen_init_constrs(self):
         for i in range(self._dim):
