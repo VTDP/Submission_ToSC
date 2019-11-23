@@ -88,32 +88,53 @@ We only list the structure of "AES_4_keydependent" but it is similar in other 6 
 
 * AES_5_round_keydepent:
     similar with AES_4_round_keydependent
+    -------------------------------------------------
     $ python3 AES_5_round_keydependent.py > AES_5.cvc  
+    -------------------------------------------------
     $ stp AES_5.cvc (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * CAMELLIA
     In the Camellia_base.py, we list the model of camellia.
     In Camellia.py, you can change the inVec to decide which bits should be active and how many rounds you want to check.  
+    -------------------------------------------------
     $ python3 Camellia.py > camellia.cvc
+    -------------------------------------------------
     $ stp camellia.cvc (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * CLEFIA
+    -------------------------------------------------
     $ python3 CLEFIA.py > CLEIFA.cvc
+    -------------------------------------------------
     $ stp CLEFIA.cvc (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * LED_6r
+    -------------------------------------------------
     $ python3 led.py > led.cvc
+    -------------------------------------------------
     $ stp led.cvc (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * LED_7r
+    -------------------------------------------------
     $ python3 led.py > led.cvc
+    -------------------------------------------------
     $ stp led.cvc (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * Misty1_6_round_62_active
+    -------------------------------------------------
     $ python3 Misty1.py > Misty1_62.cvc
+    -------------------------------------------------
     $ stp Misty1_62.py (--cryptominisat --threads 4)
+    -------------------------------------------------
 
 * Misty1_6_round_63_active
+    -------------------------------------------------
     $ python3 Misty1.py > Misty1_63.cvc
+    -------------------------------------------------
     $ stp Misty1_63.py (--cryptominisat --threads 4)
+    -------------------------------------------------
 
