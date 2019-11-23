@@ -12,6 +12,7 @@ class GenInt(object):
 
         self.mutex = Lock()
         self.trails = dict()
+        self._values = values
 
         self.inputLength = inputLength
         self.outputLength = outputLength
@@ -34,36 +35,68 @@ class GenInt(object):
 
     def __genPatterns(self):
         if not self.trails:
-            f = open( '.sbox' , 'r' )
-            if 'YES' in f.readline():
-                f.close()
-                f1 = open( '.sboxTrail', 'r' )
-                line = f1.readline()
-                while line:
-                    #self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = []
-                    L = []
-                    for x in line.split(':')[1].split( ' ' ):
-                        L.append( Vector( self.outputLength, int(x) ) )
-
-                    self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = L
+            if len(self._values) ==2** 7: 
+                f = open( '.sbox7' , 'r' )
+                if 'YES' in f.readline():
+                    f.close()
+                    f1 = open( '.sboxTrail7', 'r' )
                     line = f1.readline()
-                f1.close()
+                    while line:
+                        #self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = []
+                        L = []
+                        for x in line.split(':')[1].split( ' ' ):
+                            L.append( Vector( self.outputLength, int(x) ) )
 
+                        self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = L
+                        line = f1.readline()
+                    f1.close()
+
+                else:
+                    f.close()
+                    self.__genSboxTrails()
+                    f1 = open( '.sboxTrail7', 'w' )
+                  
+                    for x in self.trails:
+                        f1.write( str(x) )
+                        f1.write( ':' )
+                        f1.write( ' '.join( list ( map ( str, self.trails[x] ) ) ) )
+                        f1.write( '\n' )
+                    f = open( '.sbox7' , 'w' )
+                    f.write( 'YES' )
+                    f.close()
+
+                    f1.close()
             else:
-                f.close()
-                self.__genSboxTrails()
-                f1 = open( '.sboxTrail', 'w' )
-              
-                for x in self.trails:
-                    f1.write( str(x) )
-                    f1.write( ':' )
-                    f1.write( ' '.join( list ( map ( str, self.trails[x] ) ) ) )
-                    f1.write( '\n' )
-                f = open( '.sbox' , 'w' )
-                f.write( 'YES' )
-                f.close()
+                f = open( '.sbox9' , 'r' )
+                if 'YES' in f.readline():
+                    f.close()
+                    f1 = open( '.sboxTrail9', 'r' )
+                    line = f1.readline()
+                    while line:
+                        #self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = []
+                        L = []
+                        for x in line.split(':')[1].split( ' ' ):
+                            L.append( Vector( self.outputLength, int(x) ) )
 
-                f1.close()
+                        self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = L
+                        line = f1.readline()
+                    f1.close()
+
+                else:
+                    f.close()
+                    self.__genSboxTrails()
+                    f1 = open( '.sboxTrail9', 'w' )
+                  
+                    for x in self.trails:
+                        f1.write( str(x) )
+                        f1.write( ':' )
+                        f1.write( ' '.join( list ( map ( str, self.trails[x] ) ) ) )
+                        f1.write( '\n' )
+                    f = open( '.sbox9' , 'w' )
+                    f.write( 'YES' )
+                    f.close()
+
+                    f1.close()
 
 
         for vec_in in self.trails: # vec_in is a Vector 

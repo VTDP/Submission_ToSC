@@ -21,8 +21,6 @@ class AssertSbox(object):
             sboxNames.append( sboxNameOneRound )
         return sboxNames
 
-
-
     def build_constrs(self, inVec, outVec, r, p):
         assert len(inVec) == self.__dim and len(outVec) == self.__dim
         s = 'ASSERT %s = %s[%s];' % (
@@ -32,7 +30,6 @@ class AssertSbox(object):
                 )
 
         return s
-        
    
     def __bin(self, num, length):
         return '0bin' + bin(num)[2:].zfill(length)

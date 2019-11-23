@@ -32,9 +32,9 @@ class Matrix(object):
         self._declares = []
         self._asserts = []
         # the auxiliary matrix M^{\expand'}_{v, u}
-        self._invMatName = 'inv_%s_%d_%d'%(matrixName, r, p)
+        self._invMatName = 'inv_%d_%d'%(r, p)
         # E
-        self._resMatName = 'res_%s' % matrixName
+        self._resMatName = 'res'
 
         self.__declareMatrix()
         self.__declare_temp_matrix_invMatrix()

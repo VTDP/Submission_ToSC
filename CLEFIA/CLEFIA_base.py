@@ -129,11 +129,14 @@ class CLEFIA( object ):
             else:
                 self._addConstr( 'ASSERT %s = 0bin0;' % self._vars['CLEFIA_X'][0][i] )
 
-        for i in range(self._dim):
-            if i in self._outVec:
-                self._addConstr( 'ASSERT %s = 0bin1;' % self._vars['CLEFIA_X'][self._round][i] )
-            else:
-                self._addConstr( 'ASSERT %s = 0bin0;' % self._vars['CLEFIA_X'][self._round][i] )
+        for i in [x for x in range(32)] + [x for x in range(64, 96)]:
+            self._addConstr( 'ASSERT %s = 0bin0;' % self._vars['CLEFIA_X'][self._round][i] )
+
+        s = 'ASSERT BVPLUS(10,'
+        for i in [x for x in range(32, 64)] + [x for x in range(96, 127)]:
+            s += '0bin000000000@%s,' % self._vars['CLEFIA_X'][self._round][i]
+        s += '0bin000000000@%s ) = 0bin0000000001;' % self._vars['CLEFIA_X'][self._round][127] 
+
         self._constrs.append( 'QUERY FALSE;')
         #self._constrs.append( 'COUNTEREXAMPLE;')
 

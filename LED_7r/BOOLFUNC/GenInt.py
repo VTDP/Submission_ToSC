@@ -24,7 +24,7 @@ class GenInt(object):
 
     def getTrails(self):
         if not self.trails:
-            self.__genSboxTrails() 
+            self.__genSboxTrails()
         return self.trails
 
     def __genImp_from_pos(self, possibleList):
@@ -34,37 +34,7 @@ class GenInt(object):
 
     def __genPatterns(self):
         if not self.trails:
-            f = open( '.sbox' , 'r' )
-            if 'YES' in f.readline():
-                f.close()
-                f1 = open( '.sboxTrail', 'r' )
-                line = f1.readline()
-                while line:
-                    #self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = []
-                    L = []
-                    for x in line.split(':')[1].split( ' ' ):
-                        L.append( Vector( self.outputLength, int(x) ) )
-
-                    self.trails[ Vector(self.inputLength,  int (line.split(':' )[0] ) )] = L
-                    line = f1.readline()
-                f1.close()
-
-            else:
-                f.close()
-                self.__genSboxTrails()
-                f1 = open( '.sboxTrail', 'w' )
-              
-                for x in self.trails:
-                    f1.write( str(x) )
-                    f1.write( ':' )
-                    f1.write( ' '.join( list ( map ( str, self.trails[x] ) ) ) )
-                    f1.write( '\n' )
-                f = open( '.sbox' , 'w' )
-                f.write( 'YES' )
-                f.close()
-
-                f1.close()
-
+            self.__genSboxTrails()
 
         for vec_in in self.trails: # vec_in is a Vector 
             impossibleList = self.__genImp_from_pos( self.trails[vec_in] )

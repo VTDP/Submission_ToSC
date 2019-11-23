@@ -143,7 +143,6 @@ class Camellia( object ):
                 self._sboxLayer( self._vars['Camellia_inSbox'][r], self._vars['Camellia_inP'][r], r )
                 self._P( self._vars['Camellia_inP'][r], self._vars['Camellia_outP'][r], r )
                 self._block_xor( self._vars['Camellia_KX'][r][64:128], self._vars['Camellia_outP'][r], self._vars['Camellia_inFL'][0:64])
-
                 self._FL( self._vars['Camellia_inFL'], self._vars['Camellia_KX'][r+1] )
             else:
                 self._block_copy( self._vars['Camellia_KX'][r][0:64], self._vars['Camellia_inSbox'][r], self._vars['Camellia_KX'][r+1][64:128] )
@@ -151,21 +150,22 @@ class Camellia( object ):
                 self._P( self._vars['Camellia_inP'][r], self._vars['Camellia_outP'][r], r )
                 self._block_xor( self._vars['Camellia_KX'][r][64:128], self._vars['Camellia_outP'][r], self._vars['Camellia_KX'][r+1][0:64])
 
-        
-
-
     def _gen_init_constrs(self):
+        '''
+        add the initial and stopping rules
+        '''
         for i in range(self._dim):
             if i in self._inVec:
                 self._addConstr( 'ASSERT %s = 0bin1;' % self._vars['Camellia_KX'][0][i] )
             else:
                 self._addConstr( 'ASSERT %s = 0bin0;' % self._vars['Camellia_KX'][0][i] )
 
-        for i in range(self._dim):
-            if i in self._outVec:
-                self._addConstr( 'ASSERT %s = 0bin1;' % self._vars['Camellia_KX'][self._round][i] )
-            else:
-                self._addConstr( 'ASSERT %s = 0bin0;' % self._vars['Camellia_KX'][self._round][i] )
+        # C_0 + ... + C_6 + C_32 + ... + C_63 = 1
+        s = 'ASSERT BVPLUS(10, 0bin000000000@%s ' % self._vars['Camellia_KX'][self._round][64]
+        for i in range(65, 128):
+            s += ', 0bin000000000@%s' % self._vars['Camellia_KX'][self._round][i]  
+        s += ') = 0bin0000000001;'
+        self._constrs.append( s ) 
         self._constrs.append( 'QUERY FALSE;')
 
 
@@ -175,8 +175,5 @@ class Camellia( object ):
         self._gen_init_constrs()
         
         return self._constrs
-    
-
-
 
         
